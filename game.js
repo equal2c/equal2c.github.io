@@ -1,21 +1,3 @@
-const menuToggle = document.querySelector(".menu-toggle");
-const siteNav = document.querySelector(".site-nav");
-const navLinks = siteNav ? siteNav.querySelectorAll("a") : [];
-
-if (menuToggle && siteNav) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = siteNav.classList.toggle("is-open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      siteNav.classList.remove("is-open");
-      menuToggle.setAttribute("aria-expanded", "false");
-    });
-  });
-}
-
 (() => {
   const GRID_SIZE = 24;
   const BOARD_CELLS = 20;
@@ -29,7 +11,6 @@ if (menuToggle && siteNav) {
 
   class SnakeGame {
     constructor(elements) {
-      this.container = elements.container;
       this.canvas = elements.canvas;
       this.ctx = this.canvas ? this.canvas.getContext("2d") : null;
       this.scoreEl = elements.scoreEl;
@@ -51,7 +32,9 @@ if (menuToggle && siteNav) {
       this.nextDirection = DIRECTIONS.right;
       this.snake = [];
       this.food = { x: 0, y: 0 };
+      this.boardPx = 0;
       this.cellPx = 0;
+      this.lastFrame = 0;
       this.bindHandlers();
       this.syncHUD();
       this.resizeCanvas();
@@ -138,6 +121,7 @@ if (menuToggle && siteNav) {
       if (!this.canvas) return;
       const rect = this.canvas.getBoundingClientRect();
       const size = Math.floor(Math.max(320, Math.min(rect.width || 600, 640)));
+      this.boardPx = size;
       this.cellPx = Math.floor(size / BOARD_CELLS);
       this.canvas.width = this.cellPx * BOARD_CELLS;
       this.canvas.height = this.cellPx * BOARD_CELLS;
@@ -173,16 +157,6 @@ if (menuToggle && siteNav) {
       }
       if (this.boostButton) {
         this.boostButton.setAttribute("aria-pressed", String(this.boostActive));
-      }
-      if (this.container) {
-        const head = this.snake[0] || { x: -1, y: -1 };
-        this.container.dataset.score = String(this.score);
-        this.container.dataset.bestScore = String(this.bestScore);
-        this.container.dataset.length = String(this.snake.length);
-        this.container.dataset.head = `${head.x},${head.y}`;
-        this.container.dataset.food = `${this.food.x},${this.food.y}`;
-        this.container.dataset.mode = this.gameOver ? "gameover" : this.paused ? "paused" : this.running ? "playing" : "ready";
-        this.container.dataset.timer = String(this.timerId != null);
       }
     }
 
@@ -266,18 +240,12 @@ if (menuToggle && siteNav) {
     startLoop() {
       if (this.timerId != null || this.paused || this.gameOver || !this.running) return;
       this.timerId = window.setTimeout(() => this.tick(), this.getDelay());
-      if (this.container) {
-        this.container.dataset.timer = "true";
-      }
     }
 
     stopLoop() {
       if (this.timerId != null) {
         window.clearTimeout(this.timerId);
         this.timerId = null;
-      }
-      if (this.container) {
-        this.container.dataset.timer = "false";
       }
     }
 
@@ -445,24 +413,5 @@ if (menuToggle && siteNav) {
     }
   }
 
-  try {
-    const game = new SnakeGame({
-      container: document.getElementById("game-shell"),
-      canvas: document.getElementById("snake-canvas"),
-      scoreEl: document.getElementById("score"),
-      bestScoreEl: document.getElementById("best-score"),
-      stateEl: document.getElementById("game-state"),
-      startButton: document.getElementById("start-button"),
-      pauseButton: document.getElementById("pause-button"),
-      restartButton: document.getElementById("restart-button"),
-      boostButton: document.getElementById("boost-button"),
-      directionButtons: document.querySelectorAll("[data-direction]"),
-    });
-
-    game.init();
-    window.snakeGame = game;
-    window.__snakeInitError = null;
-  } catch (error) {
-    window.__snakeInitError = error instanceof Error ? error.message : String(error);
-  }
+  window.SnakeGame = SnakeGame;
 })();
