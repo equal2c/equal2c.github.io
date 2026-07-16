@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Equal2C | Personal Profile</title>
+    <meta
+      name="description"
+      content="Responsive personal professional website with a Games section placeholder."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+    <header class="site-header">
+      <div class="shell header-shell">
+        <a class="brand" href="#home" aria-label="홈으로 이동">Equal2C</a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          Menu
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="주요 메뉴">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#games">Games</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="home">
+        <div class="shell hero-shell">
+          <p class="eyebrow">Personal Professional Website</p>
+          <h1>정돈된 정보와 가벼운 게임 경험을 함께 담은 반응형 사이트</h1>
+          <p class="lead">
+            소개, 프로젝트, 연락처, 그리고 게임 섹션을 한 화면 흐름 안에서 자연스럽게 연결하는 첫 번째 루프의
+            기반입니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="content-grid shell" aria-label="프로필 섹션">
+        <article class="card" id="about">
+          <h2>About</h2>
+          <p>[사람 확인 필요] 소개 문구를 여기에 배치합니다.</p>
+        </article>
+        <article class="card" id="projects">
+          <h2>Projects</h2>
+          <p>[사람 확인 필요] 프로젝트 요약을 여기에 배치합니다.</p>
+        </article>
+        <article class="card" id="contact">
+          <h2>Contact</h2>
+          <p>[사람 확인 필요] 연락처 또는 링크를 여기에 배치합니다.</p>
+        </article>
+      </section>
+
+      <section class="games-panel shell" id="games" aria-labelledby="games-title">
+        <div class="section-heading">
+          <p class="eyebrow">Games</p>
+          <h2 id="games-title">지렁이 게임 준비 영역</h2>
+        </div>
+        <div class="game-stage" role="presentation" aria-label="게임 영역 준비 상태">
+          <p class="game-copy">
+            이번 루프에서는 게임 전체 구현 대신, 향후 지렁이 게임이 들어갈 영역과 안내 문구만 먼저 준비합니다.
+          </p>
+          <button class="primary-button" type="button" disabled>Start Game</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
